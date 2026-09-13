@@ -1,3 +1,4 @@
+<img width="1181" height="1385" alt="image" src="https://github.com/user-attachments/assets/565f53d0-c31d-4461-a11a-7d10b42f4289" />
 <img width="1015" height="789" alt="Screenshot 2026-09-12 014726" src="https://github.com/user-attachments/assets/3d85fae5-9ca0-45b1-8292-5053f3a1fe4a" />
 <img width="2000" height="1333" alt="อบรม" src="https://github.com/user-attachments/assets/82d51442-8a24-4a75-ac05-e100fc256595" />
 # ESP32 Smart Environmental and Energy Monitoring System
