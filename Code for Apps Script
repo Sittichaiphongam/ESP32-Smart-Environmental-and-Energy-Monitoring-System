@@ -1,0 +1,63 @@
+function doPost(e) {
+  try {
+
+    // ตรวจสอบว่ามีข้อมูลส่งเข้ามาหรือไม่
+    if (!e || !e.postData || !e.postData.contents) {
+      return ContentService
+        .createTextOutput(JSON.stringify({
+          status: "error",
+          message: "No POST data"
+        }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // แปลง JSON จาก ESP32
+    var data = JSON.parse(e.postData.contents);
+
+    // เปิด Spreadsheet
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    // เลือก Sheet RawData
+    var sheet = ss.getSheetByName("RawData");
+
+    // ถ้ายังไม่มี Sheet ให้สร้าง
+    if (!sheet) {
+      sheet = ss.insertSheet("RawData");
+
+      sheet.appendRow([
+        "Timestamp",
+        "Lux (lx)",
+        "Temperature (°C)",
+        "Voltage (V)",
+        "Current (mA)",
+        "Power (mW)"
+      ]);
+    }
+
+    // เพิ่มข้อมูลลงแถวใหม่
+    sheet.appendRow([
+      new Date(),
+      data.lux,
+      data.temp,
+      data.voltage,
+      data.current,
+      data.power
+    ]);
+
+    // ส่งคำตอบกลับ ESP32
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status: "success"
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+
+  } catch (error) {
+
+    return ContentService
+      .createTextOutput(JSON.stringify({
+        status: "error",
+        message: error.toString()
+      }))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
+}
